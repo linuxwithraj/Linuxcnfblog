@@ -1,0 +1,24 @@
+How to Resolve "Permission denied (publickey,gssapi-keyex,gssapi-with-mic)" on CentOS 7
+
+In most of the cloud images SSH password authentication login method is disabled and can be logged in using SSH private key only. Following error messages will appear while login using password. 
+
+[root@lc-ceph-mgmt ~]# ssh-copy-id ceph@lc-ceph-storage1
+.....................
+/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
+/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys
+Permission denied (publickey,gssapi-keyex,gssapi-with-mic).
+[root@lc-ceph-mgmt ~]#
+
+This article describes How to Resolve "Permission denied (publickey,gssapi-keyex,gssapi-with-mic)" on CentOS 7
+
+Step 1. Edit the SSH configuration file /etc/ssh/sshd_config and change the "PasswordAuthentication no" to "PasswordAuthenticationyes".
+
+[root@lc-ceph-storage2 ~]# vi /etc/ssh/sshd_config
+[root@lc-ceph-storage2 ~]#
+
+Step 2. Restart the sshd service
+
+[root@lc-ceph-storage2 ~]# systemctl restart sshd
+[root@lc-ceph-storage2 ~]#
+
+Step 3. Now try to login to veriy the issue resolution.
